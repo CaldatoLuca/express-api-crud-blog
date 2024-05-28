@@ -132,10 +132,10 @@ const store = (req, res) => {
   });
 };
 
+//Elimina il post
 const destroy = (req, res) => {
   //raccolgo lo slug inserito, come parametro e ottengo l'oggetto post corrispoindente
   const slug = req.params.slug;
-  const requestedPost = posts.find((p) => p.slug === slug);
 
   removePost("postsDb", slug);
 
