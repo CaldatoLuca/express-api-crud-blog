@@ -13,7 +13,7 @@ app.use(express.json());
 
 //Rotta HOME
 app.get("/", (req, res) => {
-  res.send("Benvenuti nel mio blog");
+  res.send("<h1>Benvenuti nel mio blog</h1> <a href='/posts'>Lista Posts</a>");
 });
 
 //Rotte POSTS

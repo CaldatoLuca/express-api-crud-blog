@@ -8,9 +8,6 @@ const postController = require("../controllers/postController");
 //Pagina lista con metodo index
 router.get("/", postController.index);
 
-//Pagina creazione, prima di slug altrimenti da slug non trovato. toglie dagli if con metodo create
-router.get("/create", postController.create);
-
 //Dettaglio post con metodo show
 router.get("/:slug", postController.show);
 

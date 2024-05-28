@@ -11,7 +11,7 @@ const index = (req, res) => {
   res.format({
     //HTML
     html: () => {
-      let html = "<h1>Lista dei Posts - Index</h1> <ul>";
+      let html = "<h1>Lista dei Posts - Index</h1> <a href='/'>Home</a> <ul>";
 
       posts.map(
         (p) =>
@@ -58,7 +58,7 @@ const show = (req, res) => {
     res.format({
       //HTML
       html: () => {
-        let html = `<h1>Richiesta fatta per post ${slug}</h1>`;
+        let html = `<h1>Richiesta fatta per post ${slug}</h1> <a href='/posts'>Back</a>`;
         html += `
         <div>
         <h3>${requestedPost.title}</h3>
@@ -85,25 +85,6 @@ const show = (req, res) => {
   } else {
     res.status(404).send(`Post ${slug} non trovato`);
   }
-};
-
-//Create
-const create = (req, res) => {
-  //Controllo il tipo di richiesta
-  res.format({
-    //HTML
-    html: () => {
-      res.send("<h1>Creazione nuovo Post</h1>");
-    },
-
-    //Le altre richieste danno status 406 con relativo errore
-    default: () => {
-      res.status(406).json({
-        message: `Richiesta ${req.headers.accept} non supportata`,
-        status: 406,
-      });
-    },
-  });
 };
 
 //Download
@@ -135,6 +116,5 @@ const download = (req, res) => {
 module.exports = {
   index,
   show,
-  create,
   download,
 };
