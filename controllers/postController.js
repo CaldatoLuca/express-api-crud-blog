@@ -3,11 +3,10 @@ const path = require("path");
 const fs = require("fs");
 
 //Funzioni utility
-const { generateSlug } = require("../utils");
+const { generateSlug, writeJSON, removePost } = require("../utils");
 
 //raccolgo i posts dal db
-const posts = require("../db");
-const { json } = require("express");
+const posts = require("../postsDb.json");
 
 //Metodo Index per la lista dei posts
 const index = (req, res) => {
@@ -114,7 +113,8 @@ const store = (req, res) => {
     image: req.body.image,
   };
 
-  posts.push(newPost);
+  //aggiorno il db json
+  writeJSON("postsDb", [...posts, newPost]);
 
   res.format({
     html: () => {
@@ -136,8 +136,8 @@ const destroy = (req, res) => {
   //raccolgo lo slug inserito, come parametro e ottengo l'oggetto post corrispoindente
   const slug = req.params.slug;
   const requestedPost = posts.find((p) => p.slug === slug);
-  const index = posts.indexOf(requestedPost);
-  posts.splice(index, 1);
+
+  removePost("postsDb", slug);
 
   res.format({
     html: () => {

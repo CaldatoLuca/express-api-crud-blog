@@ -1,4 +1,4 @@
-const posts = require("../db");
+const posts = require("../postsDb.json");
 
 module.exports = (req, res, next) => {
   const slug = req.params.slug;
