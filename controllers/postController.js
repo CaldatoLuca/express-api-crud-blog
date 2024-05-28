@@ -93,6 +93,16 @@ const show = (req, res) => {
 
 //Metodo Store per creazione di un nuovo post
 const store = (req, res) => {
+  const { title, content, tags, image } = req.body;
+
+  // Verifica che tutti i campi necessari siano presenti e non vuoti
+  if (!title || !content || !tags || !image) {
+    return res.status(400).json({
+      status: "error",
+      message: "Titolo, contenuto, tag e immagine sono tutti obbligatori",
+    });
+  }
+
   const slugs = posts.map((p) => p.slug);
   const slug = generateSlug(req.body.title, slugs);
 
