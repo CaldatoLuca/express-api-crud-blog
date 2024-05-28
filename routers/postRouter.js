@@ -1,18 +1,21 @@
 //Importo express e creo il router
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
 
 //Importo il controller per richiamare i metodi
 const postController = require("../controllers/postController");
 
 //Middlewares
 const checkDestroy = require("../middlewares/checkDestroy");
+const uploader = multer({ dest: "public/imgs/posts" });
 
 //Pagina lista con metodo index
 router.get("/", postController.index);
 
 //Store - creazione di un nuovo post
-router.post("/", postController.store);
+//Middleware multer per upload immagine, alla chiave valore image
+router.post("/", uploader.single("image"), postController.store);
 
 //Dettaglio post con metodo show
 router.get("/:slug", postController.show);

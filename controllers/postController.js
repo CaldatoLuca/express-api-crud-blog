@@ -3,7 +3,12 @@ const path = require("path");
 const fs = require("fs");
 
 //Funzioni utility
-const { generateSlug, writeJSON, removePost } = require("../utils");
+const {
+  generateSlug,
+  writeJSON,
+  removePost,
+  deletePublicFile,
+} = require("../utils");
 
 //raccolgo i posts dal db
 const posts = require("../postsDb.json");
@@ -95,10 +100,17 @@ const store = (req, res) => {
   const { title, content, tags, image } = req.body;
 
   // Verifica che tutti i campi necessari siano presenti e non vuoti
-  if (!title || !content || !tags || !image) {
+  if (!title || !content || !tags) {
+    req.file?.filename && deletePublicFile(req.file.filename);
     return res.status(400).json({
       status: "error",
       message: "Titolo, contenuto, tag e immagine sono tutti obbligatori",
+    });
+  } else if (!req.file || !req.file.mimetype.includes("image")) {
+    req.file?.filename && deletePublicFile(req.file.filename);
+    return res.status(400).json({
+      status: "error 406",
+      message: "Inserire immagine",
     });
   }
 
@@ -110,7 +122,7 @@ const store = (req, res) => {
     slug: slug,
     content: req.body.content,
     tags: req.body.tags,
-    image: req.body.image,
+    image: req.file.filename,
   };
 
   //aggiorno il db json
@@ -136,8 +148,10 @@ const store = (req, res) => {
 const destroy = (req, res) => {
   //raccolgo lo slug inserito, come parametro e ottengo l'oggetto post corrispoindente
   const slug = req.params.slug;
+  const requestedPost = posts.find((p) => p.slug === slug);
 
   removePost("postsDb", slug);
+  deletePublicFile(requestedPost.image);
 
   res.format({
     html: () => {

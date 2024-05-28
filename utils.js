@@ -14,6 +14,16 @@ const generateSlug = (str, arr) => {
 };
 
 /**
+ * Dato il nome di un file json, restituisce i dati contenuti nel file
+ * @param {string} fileName
+ */
+const readJSON = (fileName) => {
+  const filePath = path.join(__dirname, `${fileName}.json`);
+  const json = fs.readFileSync(filePath, "utf-8");
+  return JSON.parse(json);
+};
+
+/**
  * Dato il nome di un file json, sovrascrive il file con i dati passati come array
  * @param {string} fileName
  * @param {array} data
@@ -25,7 +35,7 @@ const writeJSON = (fileName, data) => {
 };
 
 /**
- * Dato il nome di un file json, elimina dal file il dato con lo slug passato
+ * Dato il nome di un file json, elimina dal file il dato con lo slug
  * @param {string} fileName
  * @param {string} slug
  */
@@ -35,8 +45,19 @@ const removePost = (fileName, slug) => {
   writeJSON(fileName, updatedData);
 };
 
+/**
+ * passato il nome del file immagine lo elimina da public/imgs/posts
+ * @param {string} fileName
+ */
+const deletePublicFile = (fileName) => {
+  const filePath = path.join(__dirname, "/public/imgs/posts", fileName);
+  fs.unlinkSync(filePath);
+};
+
 module.exports = {
   generateSlug,
   writeJSON,
   removePost,
+  deletePublicFile,
+  readJSON,
 };
