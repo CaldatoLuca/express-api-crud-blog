@@ -14,6 +14,9 @@ router.post("/", postController.store);
 //Dettaglio post con metodo show
 router.get("/:slug", postController.show);
 
+//Dettaglio post con metodo show
+router.delete("/:slug", postController.destroy);
+
 //Download con metodo download
 router.get("/:slug/download", postController.download);
 

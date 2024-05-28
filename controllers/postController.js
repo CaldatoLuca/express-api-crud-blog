@@ -132,6 +132,29 @@ const store = (req, res) => {
   });
 };
 
+const destroy = (req, res) => {
+  //raccolgo lo slug inserito, come parametro e ottengo l'oggetto post corrispoindente
+  const slug = req.params.slug;
+  const requestedPost = posts.find((p) => p.slug === slug);
+  const index = posts.indexOf(requestedPost);
+  posts.splice(index, 1);
+
+  res.format({
+    html: () => {
+      res.redirect(`/posts`);
+    },
+    json: () => {
+      res.json({
+        status: `succes`,
+        message: `Post ${slug} cancellato`,
+      });
+    },
+    default: () => {
+      res.status(406).send(`Formato non supportato`);
+    },
+  });
+};
+
 //Download
 const download = (req, res) => {
   //raccolgo lo slug inserito, come parametro e ottengo l'oggetto post corrispoindente
@@ -163,4 +186,5 @@ module.exports = {
   show,
   download,
   store,
+  destroy,
 };
