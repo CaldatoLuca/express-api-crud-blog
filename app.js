@@ -6,6 +6,9 @@ const app = express();
 const postRouter = require("./routers/postRouter");
 const morgan = require("morgan");
 
+//Importo middlaware
+const notFound = require("./middlewares/notFound");
+
 //MIDDLEWARES
 //visualizzazione file statici - img
 app.use(express.static("public"));
@@ -23,6 +26,8 @@ app.get("/", (req, res) => {
 
 //Rotte POSTS
 app.use("/posts", postRouter);
+
+app.use(notFound);
 
 //listen
 app.listen(3000, () => {
