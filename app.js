@@ -8,8 +8,9 @@ const postRouter = require("./routers/postRouter");
 //MIDDLEWARES
 //visualizzazione file statici - img
 app.use(express.static("public"));
-//body parser
+//body parsers
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //Rotta HOME
 app.get("/", (req, res) => {

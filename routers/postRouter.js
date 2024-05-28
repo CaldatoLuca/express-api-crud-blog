@@ -8,6 +8,9 @@ const postController = require("../controllers/postController");
 //Pagina lista con metodo index
 router.get("/", postController.index);
 
+//Store - creazione di un nuovo post
+router.post("/", postController.store);
+
 //Dettaglio post con metodo show
 router.get("/:slug", postController.show);
 

@@ -87,6 +87,14 @@ const show = (req, res) => {
   }
 };
 
+//Metodo Store per creazione di un nuovo post
+const store = (req, res) => {
+  res.json({
+    message: "Post creato con successo",
+    status: 201,
+  });
+};
+
 //Download
 const download = (req, res) => {
   //raccolgo lo slug inserito, come parametro e ottengo l'oggetto post corrispoindente
@@ -117,4 +125,5 @@ module.exports = {
   index,
   show,
   download,
+  store,
 };
