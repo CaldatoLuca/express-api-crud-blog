@@ -1,6 +1,11 @@
 const path = require("path");
 const fs = require("fs");
 
+/**
+ * Genera un slug da una stringa passata come parametro, arr di slug per vedere se univoco
+ * @param {string} str
+ * @param {array} arr
+ */
 const generateSlug = (str, arr) => {
   const baseSlug = str.replaceAll(" ", "-").toLowerCase().replaceAll("/", "");
 
