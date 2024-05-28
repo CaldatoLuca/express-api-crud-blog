@@ -4,10 +4,14 @@ const app = express();
 
 //Importo il router
 const postRouter = require("./routers/postRouter");
+const morgan = require("morgan");
 
 //MIDDLEWARES
 //visualizzazione file statici - img
 app.use(express.static("public"));
+
+app.use(morgan("dev"));
+
 //body parsers
 app.use(express.json()); //json
 app.use(express.urlencoded({ extended: true })); //x-www-urlencoded - lascia true(analizza anche aray e oggetti)

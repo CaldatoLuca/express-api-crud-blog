@@ -5,6 +5,9 @@ const router = express.Router();
 //Importo il controller per richiamare i metodi
 const postController = require("../controllers/postController");
 
+//Middlewares
+const checkDestroy = require("../middlewares/checkDestroy");
+
 //Pagina lista con metodo index
 router.get("/", postController.index);
 
@@ -15,7 +18,7 @@ router.post("/", postController.store);
 router.get("/:slug", postController.show);
 
 //Dettaglio post con metodo show
-router.delete("/:slug", postController.destroy);
+router.delete("/:slug", checkDestroy, postController.destroy);
 
 //Download con metodo download
 router.get("/:slug/download", postController.download);
