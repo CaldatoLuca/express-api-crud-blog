@@ -2,8 +2,12 @@
 const path = require("path");
 const fs = require("fs");
 
+//Funzioni utility
+const { generateSlug } = require("../utils");
+
 //raccolgo i posts dal db
 const posts = require("../db");
+const { json } = require("express");
 
 //Metodo Index per la lista dei posts
 const index = (req, res) => {
@@ -89,9 +93,32 @@ const show = (req, res) => {
 
 //Metodo Store per creazione di un nuovo post
 const store = (req, res) => {
-  res.json({
-    message: "Post creato con successo",
-    status: 201,
+  const slugs = posts.map((p) => p.slug);
+  const slug = generateSlug(req.body.title, slugs);
+
+  const newPost = {
+    title: req.body.title,
+    slug: slug,
+    content: req.body.content,
+    tags: req.body.tags,
+    image: req.body.image,
+  };
+
+  posts.push(newPost);
+
+  res.format({
+    html: () => {
+      res.redirect(`/posts/${slug}`);
+    },
+    json: () => {
+      res.json({
+        status: `succes`,
+        post: newPost,
+      });
+    },
+    default: () => {
+      res.status(406).send(`Formato non supportato`);
+    },
   });
 };
 
