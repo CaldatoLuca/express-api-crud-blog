@@ -9,6 +9,7 @@ const postController = require("../controllers/postController");
 //Middlewares
 const checkPostExist = require("../middlewares/checkPostExist");
 const uploader = multer({ dest: "public/imgs/posts" });
+router.use(express.urlencoded({ extended: true })); //x-www-urlencoded - lascia true(analizza anche aray e oggetti)
 
 //Pagina lista con metodo index
 router.get("/", postController.index);

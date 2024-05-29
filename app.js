@@ -16,9 +16,7 @@ app.use(express.static("public"));
 
 app.use(morgan("dev"));
 
-//body parsers
-app.use(express.json()); //json
-app.use(express.urlencoded({ extended: true })); //x-www-urlencoded - lascia true(analizza anche aray e oggetti)
+//app.use(express.json()); //json
 
 //Rotta HOME
 app.get("/", (req, res) => {
