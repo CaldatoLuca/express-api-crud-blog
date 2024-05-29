@@ -147,11 +147,13 @@ const store = (req, res) => {
 //Elimina il post
 const destroy = (req, res) => {
   //raccolgo lo slug inserito, come parametro e ottengo l'oggetto post corrispoindente
-  const slug = req.params.slug;
-  const requestedPost = posts.find((p) => p.slug === slug);
+  // const slug = req.params.slug;
+  // const requestedPost = posts.find((p) => p.slug === slug);
 
-  removePost("postsDb", slug);
-  deletePublicFile(requestedPost.image);
+  const { checkedPost } = req;
+
+  removePost("postsDb", checkedPost.slug);
+  deletePublicFile(checkedPost.image);
 
   res.format({
     html: () => {
@@ -160,7 +162,7 @@ const destroy = (req, res) => {
     json: () => {
       res.json({
         status: `succes`,
-        message: `Post ${slug} cancellato`,
+        message: `Post ${checkedPost.slug} cancellato`,
       });
     },
     default: () => {

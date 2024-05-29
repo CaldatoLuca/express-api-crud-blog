@@ -10,5 +10,7 @@ module.exports = (req, res, next) => {
     });
   }
 
+  req.checkedPost = post;
+
   next();
 };
